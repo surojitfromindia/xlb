@@ -1,25 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
-
+import Dashboard from './components/Dashboard';
+import Databoard from './components/Databoard';
+import SecureView from './components/SecureView';
+import General from './components/SettingComponent/General';
+import Setting from './components/SettingComponent/Setting';
+import WelcomeView from './components/WelcomeView';
+import ImportFrom from './components/Databoard/ImportFrom';
+import WorkSpace from './components/Databoard/Workspace';
 function App() {
+  const isLogin = true;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<WelcomeView />} />
+      <Route path="/app" element={isLogin ? <SecureView /> : <Navigate to="/" replace={true} />}>
+        <Route path="" element={<Dashboard />} />
+        <Route path="databoard" element={<Databoard />}>
+          <Route index element={<WorkSpace />} />
+          <Route path="import">
+            <Route path=":importFrom" element={<ImportFrom/>} />
+          </Route>
+        </Route>
+        <Route path="setting" element={<Setting />}>
+          <Route path="general" element={<General />} />
+        </Route>
+      </Route>
+    </Routes>
   );
 }
 
