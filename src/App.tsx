@@ -14,6 +14,7 @@ function App() {
     <Routes>
       <Route path="/" element={<WelcomeView />} />
       <Route path="/app" element={isLogin ? <SecureView /> : <Navigate to="/" replace={true} />}>
+        <Route path="workspace" element={<Dashboard />} />
         <Route path="" element={<Dashboard />} />
         <Route path="databoard" element={<Databoard />}>
           <Route index element={<WorkSpace />} />

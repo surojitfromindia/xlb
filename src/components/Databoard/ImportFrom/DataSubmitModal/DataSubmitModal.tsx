@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, Modal, Popover, Row, Select } from 'antd';
+import { Button, Form, Input, Modal, Popover, Row, Select } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { FC, useState } from 'react';
 
