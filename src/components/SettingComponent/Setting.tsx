@@ -16,7 +16,7 @@ const Setting: FC = () => {
           </Menu.Item>
         </Menu>
       </Col>
-      <Col>
+      <Col className='p-5'>
         <Outlet />
       </Col>
     </Row>

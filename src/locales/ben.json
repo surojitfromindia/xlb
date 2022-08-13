@@ -1,0 +1,15 @@
+{
+  "button": {
+    "save": "Save করুন",
+    "cancel": "বাতিল"
+  },
+  "label": {
+    "workspace": "Workspace",
+    "description": "বর্ণনা",
+    "app_laguage": "ভাষা"
+  },
+  "placeholder": {
+    "workspace_name": "Workspace এর নাম",
+    "create_a_workspace": "একটি workspace তৈরি করুন"
+  }
+}

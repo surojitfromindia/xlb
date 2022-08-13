@@ -1,0 +1,15 @@
+{
+  "button": {
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "label": {
+    "workspace": "Workspace",
+    "app_laguage": "App language",
+    "description": "Description"
+  },
+  "placeholder": {
+    "workspace_name": "Workspace name",
+    "create_a_workspace": "Create a workspace"
+  }
+}

@@ -8,6 +8,7 @@ import Setting from './components/SettingComponent/Setting';
 import WelcomeView from './components/WelcomeView';
 import ImportFrom from './components/Databoard/ImportFrom';
 import WorkSpace from './components/Databoard/Workspace';
+import "./locales/i18next"
 function App() {
   const isLogin = true;
   return (

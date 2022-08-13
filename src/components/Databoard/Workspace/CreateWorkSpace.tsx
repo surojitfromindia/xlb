@@ -2,6 +2,7 @@
 
 import { Form, Input, Modal } from 'antd';
 import { FC, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { WorkspaceContext } from './Store/store';
 
 const { TextArea } = Input;
@@ -18,6 +19,7 @@ type WorkSpaceFormFields = {
 };
 
 const CreateWorkSpaceModal: FC<ModalProps> = ({ onHide, visiable, action_mode }: ModalProps) => {
+  const {t} =useTranslation()
   const [form] = Form.useForm();
   const { dispatch } = useContext(WorkspaceContext);
   const handleWorkSpaceFormSubmit = (v: WorkSpaceFormFields) => {
@@ -36,13 +38,13 @@ const CreateWorkSpaceModal: FC<ModalProps> = ({ onHide, visiable, action_mode }:
     onHide();
   };
   return (
-    <Modal onOk={form.submit} width={600} maskClosable={false} title={'Create a workspace'} visible={visiable} centered onCancel={onHide}>
+    <Modal okText={t("button.save")} cancelText={t("button.cancel")} onOk={form.submit} width={600} maskClosable={false} title={t('placeholder.create_a_workspace')} visible={visiable} centered onCancel={onHide}>
       <Form form={form} layout="vertical" onFinish={handleWorkSpaceFormSubmit}>
         <div>
-          <Form.Item label="Workspace" name={'workspacename'}>
-            <Input placeholder="Workspace name" />
+          <Form.Item label={t('label.workspace')} name={'workspacename'}>
+            <Input placeholder={t("placeholder.workspace_name")} />
           </Form.Item>
-          <Form.Item label="Description" name={'workspacedescription'}>
+          <Form.Item label={t('label.description')} name={'workspacedescription'}>
             <TextArea rows={6} />
           </Form.Item>
         </div>
