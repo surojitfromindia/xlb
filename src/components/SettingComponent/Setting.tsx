@@ -8,7 +8,7 @@ const Setting: FC = () => {
   const { pathname } = useLocation();
   const selected_location = useMemo(() => `${pathname.split('/').pop()}`, [pathname]);
   return (
-    <Row style={{ minHeight: '100%' }}>
+    <div className='flex h-screen' >
       <Col style={{ width: '200px' }}>
         <Menu  style={{ height: '100%' }} defaultSelectedKeys={[selected_location]}>
           <Menu.Item key={'general'}>
@@ -19,7 +19,7 @@ const Setting: FC = () => {
       <Col className='p-5'>
         <Outlet />
       </Col>
-    </Row>
+    </div>
   );
 };
 export default Setting;

@@ -6,21 +6,21 @@ import SecureView from './components/SecureView';
 import General from './components/SettingComponent/General';
 import Setting from './components/SettingComponent/Setting';
 import WelcomeView from './components/WelcomeView';
-import ImportFrom from './components/Databoard/ImportFrom';
 import WorkSpace from './components/Databoard/Workspace';
-import "./locales/i18next"
+import './locales/i18next';
+import WorkspaceView from './components/Databoard/Workspace/WorkspaceView';
+import { useState } from 'react';
 function App() {
-  const isLogin = true;
+  const [isLogin] = useState(true);
   return (
     <Routes>
       <Route path="/" element={<WelcomeView />} />
       <Route path="/app" element={isLogin ? <SecureView /> : <Navigate to="/" replace={true} />}>
-        <Route path="workspace" element={<Dashboard />} />
-        <Route path="" element={<Dashboard />} />
+        <Route index element={<Dashboard />} />
         <Route path="databoard" element={<Databoard />}>
-          <Route index element={<WorkSpace />} />
-          <Route path="import">
-            <Route path=":importFrom" element={<ImportFrom/>} />
+          <Route path="workspace">
+            <Route index element={<WorkSpace />} />
+            <Route path=":workspaceid" element={<WorkspaceView />} />
           </Route>
         </Route>
         <Route path="setting" element={<Setting />}>

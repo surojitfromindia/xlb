@@ -4,7 +4,7 @@ type DataSource = {
   collection_type: COLLECTIONTYPE;
   category: SOURCECATEGORY;
 };
-type COLLECTIONTYPE = 'excel' | 'mongodb';
+type COLLECTIONTYPE = 'excel' | 'mongodb' | ["csv","tsv"];
 type SOURCECATEGORY = 'db' | 'file' | "all" |undefined;
 
 const importDataForm: DataSource[] = [
@@ -15,11 +15,18 @@ const importDataForm: DataSource[] = [
     category: 'file',
   },
   {
+    card_title: 'CSV, TSV',
+    card_description: 'Import data from csv or tsv file',
+    collection_type: ["csv","tsv"],
+    category: 'file',
+  },
+  {
     card_title: 'Mongodb',
     card_description: 'Extract data from your mongodb atlas',
     collection_type: 'mongodb',
     category: 'db',
   },
+
 ];
 
 //if no category is found return all

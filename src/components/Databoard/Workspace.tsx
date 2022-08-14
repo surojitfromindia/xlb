@@ -1,45 +1,40 @@
-import { Button } from 'antd';
-import { FC, useContext, useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Button, message } from 'antd';
+import axios from 'axios';
+import { FC, useContext, useEffect, useState } from 'react';
+import { getWorkSpaces } from '../../api/workspace';
 import CreateWorkSpaceModal from './Workspace/CreateWorkSpace';
 import { WorkspaceContext, WorkSpaceProvider } from './Workspace/Store/store';
-import { WorkspaceList, WorkspaceData } from './Workspace/WorkspaceList';
+import { WorkspaceList } from './Workspace/WorkspaceList';
 
 const WorkSpaceIndex: FC = () => {
   const { state, dispatch } = useContext(WorkspaceContext);
-  let [hasData, setHasData] = useState(true);
   let [showWorkSpaceCreationModal, setWorkSpaceCreationModal] = useState<boolean>(false);
   let [workSpaceModalActionState, setWorkSpaceModalActionState] = useState<'add' | 'edit'>('add');
   let handleWorkSpaceCreationModal = (state: boolean) => {
     setWorkSpaceCreationModal(state);
   };
 
-  let navigator = useNavigate();
+  //load data from api call
   useEffect(() => {
-    if (hasData === false) {
-      navigator('/app/databoard/import/all');
+    let mounted = true;
+    if (mounted) {
+      fetchWorkspaceInformation();
     }
-  }, [hasData]);
 
-  const fakeDataList: [WorkspaceData] = useMemo(
-    () => [
-      {
-        id: '1',
-        title: 'People of eoon',
-        description: 'A population analysis on people of eoon',
-        is_shared: false,
-        details: {
-          tables: 1,
-        },
-      },
-    ],
-    []
-  );
+    async function fetchWorkspaceInformation() {
+      let data = await getWorkSpaces(onLoadError);
+      if (data) {
+        dispatch({ type: 'load', workspace_data: data });
+      }
+    }
+    return () => {
+      mounted = false;
+    };
+  }, [dispatch]);
 
-
-  useEffect(() => {
-    dispatch({ type: 'load', workspace_data: fakeDataList });
-  }, [dispatch, fakeDataList]);
+  const onLoadError = (error: any) => {
+    message.error('Some error');
+  };
   return (
     <>
       <div>
@@ -68,7 +63,6 @@ const WorkSpaceIndex: FC = () => {
     </>
   );
 };
-
 
 const WorkSpace: FC = () => {
   return (

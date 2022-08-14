@@ -1,0 +1,40 @@
+{
+  "workspace": [
+    {
+      "id": 1,
+      "title": "People of eoon",
+      "description": "A population analysis on people of eoon",
+      "is_shared": false,
+      "details": {
+        "tables": 2
+      }
+    },
+    {
+      "id": 2,
+      "title": "Income of 2022",
+      "description": "Income description of year 2022.ueifuwgrwgr  gwuerg wrgwu grwu ru grugwrguqreu rgweu greu s",
+      "is_shared": true,
+      "details": {
+        "tables": 0
+      }
+    },
+    {
+      "title": "new moon",
+      "description": "this is a new moon book",
+      "id": "3",
+      "is_shared": false
+    },
+    {
+      "title": "n",
+      "description": "",
+      "id": "4",
+      "is_shared": false
+    },
+    {
+      "title": "n",
+      "description": "",
+      "id": "5",
+      "is_shared": false
+    }
+  ]
+}

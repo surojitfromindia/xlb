@@ -13,7 +13,7 @@ const SideMenu: FC = () => {
           <Link to="/app">Dashboard</Link>
         </Menu.Item>
         <Menu.Item key="/databoard">
-          <Link to="/app/databoard">Databoard</Link>
+          <Link to="/app/databoard/workspace">Databoard</Link>
         </Menu.Item>
         <Menu.Item key="/setting">
           <Link to="/app/setting/general">Setting</Link>

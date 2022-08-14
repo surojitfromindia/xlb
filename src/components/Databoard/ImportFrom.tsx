@@ -1,24 +1,25 @@
 import { FC, useMemo, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import DataSourceCard from './ImportFrom/DataSourceCard';
 
 import { _getSourceByCategory, SOURCECATEGORY, DataSource } from '../../data/importFrom';
 import DataSubmitModal from './ImportFrom/DataSubmitModal/DataSubmitModal';
+import { Typography } from 'antd';
 
 type cateGories = {
   label: string;
   category: SOURCECATEGORY;
 };
 const ImportFrom: FC = () => {
-  const { importFrom } = useParams();
+  const [category, setCategory] = useState<SOURCECATEGORY>("all");
   const [openDataSubmitModal, setDSM] = useState(false);
   const onImportClickHandler = (category: SOURCECATEGORY) => {
     setDSM(true);
   };
 
   const showCategory = useMemo((): DataSource[] => {
-    return importFrom ? _getSourceByCategory(importFrom) : [];
-  }, [importFrom]);
+    return category ? _getSourceByCategory(category) : [];
+  }, [category]);
   const all_categories: cateGories[] = [
     {
       label: 'All',
@@ -29,10 +30,14 @@ const ImportFrom: FC = () => {
       category: 'db',
     },
     {
-      label: 'File',
+      label: 'Files',
       category: 'file',
     },
   ];
+
+  const categoryChangeHandler =(value: SOURCECATEGORY)=>{
+    setCategory(value)
+  }
 
   return (
     <>
@@ -51,14 +56,14 @@ const ImportFrom: FC = () => {
           Extract your valuable data from a diverse amount of source. Currenty we provide extracting data from databases and from excel and csv files
         </p>
         <div className="flex mt-10">
-          <div className="w-44 mt-5 flex flex-col space-y-2">
+          <div className="w-32 mt-5 flex flex-col space-y-2">
             {all_categories.map((cate) => (
-              <Link key={cate.category} replace={true} to={`/app/databoard/import/${cate.category}`}>
+              <Typography.Link onClick={()=>categoryChangeHandler(cate.category)} key={cate.category} >
                 {cate.label}
-              </Link>
+              </Typography.Link>
             ))}
           </div>
-          <div className="w-full flex flex-row gap-3">
+          <div className="w-full flex  flex-wrap">
             {showCategory.map((cc, index) => (
               <DataSourceCard key={index} card_title={cc.card_title} card_description={cc.card_description} onImportAction={onImportClickHandler} />
             ))}

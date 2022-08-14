@@ -9,13 +9,15 @@ type CardProps = {
 
 const DataSourceCard: FC<CardProps> = ({ card_title, card_description, onImportAction }: CardProps) => {
   return (
-    <Card title={card_title} className="w-64">
-      <div>{card_description}</div>
-      <Button className="mt-5" onClick={onImportAction}>
-        Import
-      </Button>
-    </Card>
+    <div className="w-64 ml-3 mb-3">
+      <Card title={card_title}>
+        <div className="h-12">{card_description}</div>
+        <Button className="mt-5" onClick={onImportAction}>
+          Import
+        </Button>
+      </Card>{' '}
+    </div>
   );
 };
 
-export default DataSourceCard
+export default DataSourceCard;

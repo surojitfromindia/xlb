@@ -1,9 +1,15 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Layout } from 'antd';
 import { Link } from 'react-router-dom';
 import { Content } from 'antd/lib/layout/layout';
 
 const WelcomeView: FC = () => {
+  useEffect(() => {
+    console.log("gt");
+      
+  
+  }, [])
+  
   return (
     <Layout>
       <Layout>

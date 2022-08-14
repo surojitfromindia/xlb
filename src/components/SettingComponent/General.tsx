@@ -1,7 +1,7 @@
 import { Form, Select } from 'antd';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
-import { FC } from 'react';
+import { FC} from 'react';
 import { defaultLanguage, LocalsArray, localsType } from '../../data/supportedLocals';
 const { Option } = Select;
 
@@ -11,6 +11,8 @@ const General: FC = () => {
   const languageChangeHandler = (lng: localsType) => {
     i18next.changeLanguage(lng);
   };
+
+  
   return (
     <div>
       <h1 className="text-xl">General settings</h1>
