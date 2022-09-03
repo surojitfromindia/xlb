@@ -1,5 +1,4 @@
 import { FC, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import DataSourceCard from './ImportFrom/DataSourceCard';
 
 import { _getSourceByCategory, SOURCECATEGORY, DataSource } from '../../data/importFrom';

@@ -1,5 +1,4 @@
 import { Button, message } from 'antd';
-import axios from 'axios';
 import { FC, useContext, useEffect, useState } from 'react';
 import { getWorkSpaces } from '../../api/workspace';
 import CreateWorkSpaceModal from './Workspace/CreateWorkSpace';
@@ -33,7 +32,7 @@ const WorkSpaceIndex: FC = () => {
   }, [dispatch]);
 
   const onLoadError = (error: any) => {
-    message.error('Some error');
+    message.error('Some error', error);
   };
   return (
     <>

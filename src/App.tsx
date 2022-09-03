@@ -10,11 +10,13 @@ import WorkSpace from './components/Databoard/Workspace';
 import './locales/i18next';
 import WorkspaceView from './components/Databoard/Workspace/WorkspaceView';
 import { useState } from 'react';
+import RegistrationPage from './Pages/RegistrationPage';
 function App() {
   const [isLogin] = useState(true);
   return (
     <Routes>
       <Route path="/" element={<WelcomeView />} />
+      <Route path='/register' element={<RegistrationPage/>}/>
       <Route path="/app" element={isLogin ? <SecureView /> : <Navigate to="/" replace={true} />}>
         <Route index element={<Dashboard />} />
         <Route path="databoard" element={<Databoard />}>
