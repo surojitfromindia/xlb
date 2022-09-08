@@ -4,10 +4,7 @@ import { Link } from 'react-router-dom';
 import { Content } from 'antd/lib/layout/layout';
 
 const WelcomeView: FC = () => {
-  useEffect(() => {
-    console.log("gt");
-      
-  
+  useEffect(() => {      
   }, [])
   
   return (
@@ -22,7 +19,11 @@ const WelcomeView: FC = () => {
             <div>Currently this is a demo mode. we only support one document per user.</div>
 
           </div>
+          <div className='flex gap-2 mt-2'>
+
           <Link className='font-medium' to="/app">Dashboard</Link>
+          <Link className='font-medium' to="/register">Register</Link>
+          </div>
         </Content>
       </Layout>
     </Layout>

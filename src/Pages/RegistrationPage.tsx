@@ -1,6 +1,7 @@
 import { Button, Form, Input } from 'antd';
 import { Rule } from 'antd/lib/form';
 import { useContext } from 'react';
+import { getUserExistsStatus } from '../api/auth/registration';
 import { AppContext } from '../context/Store/store';
 import { RegistrationForm } from '../interfaces/registrationform';
 
@@ -12,8 +13,13 @@ export default function RegistrationPage() {
   const { dispatch } = useContext(AppContext);
   //handle register
   let [registratioForm] = Form.useForm<RegistrationForm>();
-  const onRegisterFormSubmitHandler = (values: RegistrationForm) => {
+  const onRegisterFormSubmitHandler = async(values: RegistrationForm) => {
     //check if user name or email exists
+    let registration_payload = {
+      username : values.username,
+    }
+    let is_user_registered = await getUserExistsStatus(registration_payload.username)
+    console.log("Checking user registration",is_user_registered)
     dispatch({ type: 'register', user_info: { email: values.username } });
   };
 
