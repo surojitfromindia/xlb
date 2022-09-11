@@ -11,7 +11,7 @@ async function postNewUserRegitserService(username: string, password: string, co
   const registration_payload = {
     user_name: username,
     password: password,
-    confirm_password: confirm_password,
+    confirmpassword: confirm_password,
   };
   let response = await axiosBaseConfig.post('/register', registration_payload);
   if (response.data) {

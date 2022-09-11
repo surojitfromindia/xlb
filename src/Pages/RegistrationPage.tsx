@@ -1,7 +1,7 @@
-import { Button, Form, Input } from 'antd';
+import { Alert, Button, Form, Input } from 'antd';
 import { Rule } from 'antd/lib/form';
-import { useContext } from 'react';
-import { getUserExistsStatus } from '../api/auth/registration';
+import { useContext, useState } from 'react';
+import { getUserExistsStatus, postNewUserRegitser } from '../api/auth/registration';
 import { AppContext } from '../context/Store/store';
 import { RegistrationForm } from '../interfaces/registrationform';
 
@@ -13,14 +13,31 @@ export default function RegistrationPage() {
   const { dispatch } = useContext(AppContext);
   //handle register
   let [registratioForm] = Form.useForm<RegistrationForm>();
-  const onRegisterFormSubmitHandler = async(values: RegistrationForm) => {
+  const onRegisterFormSubmitHandler = async (values: RegistrationForm) => {
     //check if user name or email exists
     let registration_payload = {
-      username : values.username,
+      username: values.username,
+      password: values.password,
+      confirmpassword: values.confirmpassword,
+    };
+    let { data, success } = await getUserExistsStatus(registration_payload.username, handleRegistrationFailed);
+    console.log('Checking user registration', success);
+    if (success) {
+      let { user_already_registered, message } = data;
+      if (!user_already_registered) {
+        let { data: reg_result, success: reg_success } = await postNewUserRegitser(
+          registration_payload.username,
+          registration_payload.password,
+          registration_payload.confirmpassword,
+          handleRegistrationFailed
+        );
+        if (reg_success) {
+          dispatch({ type: 'register', user_info: reg_result, access_token: reg_result.access_token });
+        }
+      } else {
+        handleRegistrationFailed({message});
+      }
     }
-    let is_user_registered = await getUserExistsStatus(registration_payload.username)
-    console.log("Checking user registration",is_user_registered)
-    dispatch({ type: 'register', user_info: { email: values.username } });
   };
 
   const validatio_rules: ValidationRules = {
@@ -58,16 +75,36 @@ export default function RegistrationPage() {
     ],
   };
 
+  const [errorAlert, setErrorAlert] = useState({ visiable: false, message: '' });
+  const handleRegistrationFailed = (error_body: any) => {
+    console.log("error on reg",error_body)
+    if (error_body?.reason) {
+      let {message} = error_body.reason;
+      if(Array.isArray(message)){
+        setErrorAlert({ visiable: true, message: message.join(",") });
+      }
+      else{
+        setErrorAlert({ visiable: true, message: message });
+
+      }
+    } else {
+      setErrorAlert({ visiable: true, message: error_body.message });
+    }
+  };
   return (
     <div className="p-5 h-screen flex flex-col items-center ">
-      <div className="mt-10">
+      <div className="mt-10 w-96">
         <h1 className="text-2xl mb-5">Register to use Reducer&reg;</h1>
+        <div className="my-5">
+          {errorAlert.visiable && (
+            <Alert type="error"  afterClose={() => setErrorAlert({ visiable: false, message: '' })} message={errorAlert.message} showIcon closable />
+          )}
+        </div>
         <Form
           name="registrationform"
           onFinish={onRegisterFormSubmitHandler}
           form={registratioForm}
           layout="vertical"
-          className="w-96"
           labelCol={{ span: 15 }}
           wrapperCol={{ span: 80 }}
         >

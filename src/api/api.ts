@@ -14,11 +14,14 @@ const APIWrapper = async (caller: CallerFnType, ...capture: ErrorRevoker[]) => {
     }
   } catch (error) {
     if (error instanceof AxiosError) {
-      message.error('Connection to server failed');
-    } else {
-      for (let fn of capture) {
-        fn(error);
+      if (error.code === 'ERR_BAD_REQUEST') {
+        let error_body = error.response?.data;
+        for (let fn of capture) {
+          fn(error_body);
+        }
       }
+    } else {
+      message.error('Connection to server failed' + error);
     }
   }
 };

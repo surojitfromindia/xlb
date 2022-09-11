@@ -5,6 +5,7 @@ import { IAppState, IUserInfo } from '../../interfaces/app';
 
 type RegisterAction = {
   user_info: Partial<IUserInfo>;
+  access_token : string;
   type: 'register';
 };
 
@@ -13,9 +14,9 @@ const AppReducer: Reducer<IAppState, AppAction> = (state: IAppState, action: App
   switch (action.type) {
     //after add append the items to workspace list
     case 'register': {
-      console.log("ni",action.user_info)
-      localStorage.setItem('email', JSON.stringify(action.user_info));
-      return { ...state, user_info: action.user_info };
+      //store access_token in localStorage for now //TODO: store it in http only cookie
+      localStorage.setItem("access_token", action.access_token);
+      return { ...state, user_info: action.user_info,  };
     }
 
     default:

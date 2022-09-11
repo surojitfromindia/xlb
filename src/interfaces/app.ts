@@ -1,11 +1,12 @@
 interface IAppState {
-    user_info : IUserInfo
+  user_info: IUserInfo;
+  
 }
-
 
 interface IUserInfo {
-    email ?: string,
-        registration_date ?: string,
+  email?: string;
+  user_name? : string,
+  registration_date?: string;
 }
 
-export type {IAppState, IUserInfo}
+export type { IAppState, IUserInfo };
