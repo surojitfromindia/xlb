@@ -1,6 +1,4 @@
-import { Col, Layout, Menu, Row } from 'antd';
-import { Content, Header } from 'antd/lib/layout/layout';
-import Sider from 'antd/lib/layout/Sider';
+import { Col, Menu } from 'antd';
 import { FC, useMemo } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 

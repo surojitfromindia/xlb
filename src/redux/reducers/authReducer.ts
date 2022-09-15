@@ -5,6 +5,7 @@ interface UserDetails {
   email?: string;
   user_name: string;
   access_token?: string;
+  date : number
 }
 
 interface AuthDetails {
@@ -26,6 +27,7 @@ const authReducers = createSlice({
       state.user_details = {
         user_name :  action.payload.user_name,
         email :  action.payload?.email ?? "",
+        date :  Date.now()
       };
     },
   },
