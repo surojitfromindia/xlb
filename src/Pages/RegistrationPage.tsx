@@ -1,17 +1,17 @@
 import { Alert, Button, Form, Input } from 'antd';
 import { Rule } from 'antd/lib/form';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { getUserExistsStatus, postNewUserRegitser } from '../api/auth/registration';
-import { AppContext } from '../context/Store/store';
 import { RegistrationForm } from '../interfaces/registrationform';
+import { useDispatch } from 'react-redux';
+import { register } from '../redux/reducers/authReducer';
 
 type ValidationRules = {
   [elementname in keyof RegistrationForm]: Rule[];
 };
 
 export default function RegistrationPage() {
-  const { dispatch } = useContext(AppContext);
-  //handle register
+  const dispatch = useDispatch(); //handle register
   let [registratioForm] = Form.useForm<RegistrationForm>();
   const onRegisterFormSubmitHandler = async (values: RegistrationForm) => {
     //check if user name or email exists
@@ -21,7 +21,6 @@ export default function RegistrationPage() {
       confirmpassword: values.confirmpassword,
     };
     let { data, success } = await getUserExistsStatus(registration_payload.username, handleRegistrationFailed);
-    console.log('Checking user registration', success);
     if (success) {
       let { user_already_registered, message } = data;
       if (!user_already_registered) {
@@ -32,15 +31,15 @@ export default function RegistrationPage() {
           handleRegistrationFailed
         );
         if (reg_success) {
-          dispatch({ type: 'register', user_info: reg_result, access_token: reg_result.access_token });
+          dispatch(register(reg_result));
         }
       } else {
-        handleRegistrationFailed({message});
+        handleRegistrationFailed({ message });
       }
     }
   };
 
-  const validatio_rules: ValidationRules = {
+  const validation_rules: ValidationRules = {
     username: [
       {
         required: true,
@@ -77,15 +76,12 @@ export default function RegistrationPage() {
 
   const [errorAlert, setErrorAlert] = useState({ visiable: false, message: '' });
   const handleRegistrationFailed = (error_body: any) => {
-    console.log("error on reg",error_body)
     if (error_body?.reason) {
-      let {message} = error_body.reason;
-      if(Array.isArray(message)){
-        setErrorAlert({ visiable: true, message: message.join(",") });
-      }
-      else{
+      let { message } = error_body.reason;
+      if (Array.isArray(message)) {
+        setErrorAlert({ visiable: true, message: message.join(',') });
+      } else {
         setErrorAlert({ visiable: true, message: message });
-
       }
     } else {
       setErrorAlert({ visiable: true, message: error_body.message });
@@ -97,7 +93,7 @@ export default function RegistrationPage() {
         <h1 className="text-2xl mb-5">Register to use Reducer&reg;</h1>
         <div className="my-5">
           {errorAlert.visiable && (
-            <Alert type="error"  afterClose={() => setErrorAlert({ visiable: false, message: '' })} message={errorAlert.message} showIcon closable />
+            <Alert type="error" afterClose={() => setErrorAlert({ visiable: false, message: '' })} message={errorAlert.message} showIcon closable />
           )}
         </div>
         <Form
@@ -108,13 +104,13 @@ export default function RegistrationPage() {
           labelCol={{ span: 15 }}
           wrapperCol={{ span: 80 }}
         >
-          <Form.Item name="username" rules={validatio_rules.username}>
+          <Form.Item name="username" rules={validation_rules.username}>
             <Input placeholder="User name or Email" />
           </Form.Item>
-          <Form.Item name="password" validateFirst={true} rules={validatio_rules.password}>
+          <Form.Item name="password" validateFirst={true} rules={validation_rules.password}>
             <Input.Password placeholder="Password" />
           </Form.Item>
-          <Form.Item name="confirmpassword" validateFirst={true} dependencies={['password']} rules={validatio_rules.confirmpassword}>
+          <Form.Item name="confirmpassword" validateFirst={true} dependencies={['password']} rules={validation_rules.confirmpassword}>
             <Input.Password placeholder="Confirm password" />
           </Form.Item>
           <Form.Item>

@@ -9,6 +9,7 @@ type ErrorRevoker = (error: any) => void;
 const APIWrapper = async (caller: CallerFnType, ...capture: ErrorRevoker[]) => {
   try {
     let data = await caller();
+    console.log("data from api call", data)
     if (data) {
       return data;
     }
